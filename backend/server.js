@@ -52,6 +52,7 @@ app.use('/login', async (req, res) => {
         const user = await executeQuery(stmt);
 
         // Überprüfen, ob ein Benutzer mit dem angegebenen Benutzernamen gefunden wurde
+        console.log(user.length);
         if (user.length === 0) {
             res.status(401).send('Ungültige Anmeldeinformationen');
             return;
@@ -61,7 +62,6 @@ app.use('/login', async (req, res) => {
 
         // Vergleichen des eingegebenen Passworts mit dem in der Datenbank gespeicherten Passwort
         const passwordMatch = await bcrypt.compare(req.body.logPassword, hashedPasswordFromDB);
-
         if (!passwordMatch) {
             res.status(401).send('Ungültige Anmeldeinformationen');
             return;
@@ -70,7 +70,10 @@ app.use('/login', async (req, res) => {
         // Wenn das Passwort übereinstimmt, ein neues Session-Token generieren und in der Datenbank speichern
         const newSessionToken = generateSessionToken();
         const updateSessionTokenStmt = `UPDATE users SET session_token = ${connection.escape(newSessionToken)} WHERE user_id = ${connection.escape(user[0].user_id)}`;
+        console.log(stmt, user, passwordMatch, updateSessionTokenStmt);
+        
         await executeQuery(updateSessionTokenStmt);
+        
 
         // Antwort mit dem Session-Token senden
         res.send({
@@ -158,6 +161,21 @@ app.post('/api/data/inventory/delete', async (req, res) => {
     }
 });
 
+app.post('/api/data/user/updatePassword', async (req, res) => {
+    try {
+        // Daten aus MySQL abrufen und senden
+        const hashedPassword = await encryptPassword(user.username);
+        const stmt = `UPDATE users SET password = '${connection.escape(hashedPassword)}' WHERE user_id = ${connection.escape(req.body.user_id)}`;
+        if(await executeQuery(stmt)){
+            res.status(201).send('Passwort erfolgreich geändert');
+        } else {
+            res.status(201).send('Fehler beim Ändern des Passworts');
+        }
+    } catch (err) {
+        res.status(500).send('Interner Serverfehler');
+    }
+});
+
 async function encryptPassword(password) {
     try {
         const saltRounds = 10; // Anzahl der Runden für die Salt-Generierung
@@ -176,6 +194,7 @@ function generateSessionToken() {
         throw new Error('Fehler beim Generieren des Session-Tokens: ' + error.message);
     }
 }
+
 
 // Server starten
 app.listen(port, () => {

@@ -47,12 +47,11 @@ CREATE TABLE inventory (
     FOREIGN KEY (food_id) REFERENCES foods(food_id)
 );
 
-// Testdata
 -- Testdaten für die Tabelle "users" (mit Namen als Passwort)
-INSERT INTO users (username, password, session_token) VALUES
-('john_doe', 'john_doe', 'abc123'),
-('jane_smith', 'jane_smith', 'def456'),
-('bob_jones', 'bob_jones', 'ghi789');
+INSERT INTO users (username, password) VALUES
+('john', '$2b$10$jw97Ne9rOEswuLt.0mB8hOhIRgq4BQSUYOJGC7TS3iCFdYu9NW4Zu'),
+('jane', '$2b$10$7t2VblTiTWnFTlPSriQVTuANNM4Zl6rblfmQ7unn9shcg6koRihNi'),
+('bob', '$2b$10$XV90pwwuDVoR3AWO0UeOb.C6Bq1g/HGcKwMSiSZGN7bPz9IB9D9oG');
 
 -- Testdaten für die Tabelle "groups" (mit Familien- oder WG-Namen)
 INSERT INTO groups (name) VALUES
