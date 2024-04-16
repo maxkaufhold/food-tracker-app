@@ -13,7 +13,7 @@ const dbConfig = {
     host: 'localhost',
     user: 'admin',
     password: '',
-    database: 'test'
+    database: 'food_tracker_app_db'
 };
 
 // Verbindung zur MySQL-Datenbank herstellen
@@ -24,7 +24,7 @@ connection.connect((err) => {
         console.error('Fehler beim Verbinden zur MySQL-Datenbank: ' + err.stack);
         return;
     }
-    console.log('Erfolgreich mit MySQL-Datenbank verbunden als ID ' + connection.threadId);
+    console.log('Er folgreich mit MySQL-Datenbank verbunden als ID ' + connection.threadId);
 });
 
 // Funktion zum Ausführen von SQL-Abfragen
@@ -116,6 +116,21 @@ app.use('/register', async (req, res) => {
     }
 });
 
+app.use('/logout', async (req, res) => {
+    try {
+        const { token } = req.body;
+
+        // Eintragen des Benutzers in die Datenbank
+        const stmt = `UPDATE users set session_token = null where session_token = ${connection.escape(token)}`;
+        console.log(stmt);
+        await executeQuery(stmt);
+        res.status(200).send('Erfolgreich augeloggt');
+
+    } catch (error) {
+        console.error('Fehler beim Registrieren: ' + error.message);
+        res.status(500).send('Interner Serverfehler');
+    }
+});
 
 app.get('/api/data/profil', async (req, res) => {
     try {

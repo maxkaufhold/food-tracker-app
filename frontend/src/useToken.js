@@ -4,7 +4,7 @@ export default function useToken() {
   const getToken = () => {
     const tokenString = sessionStorage.getItem('token');
     const userToken = JSON.parse(tokenString);
-    return userToken?.token
+    return userToken?.token;
   };
 
   const [token, setToken] = useState(getToken());
@@ -14,8 +14,14 @@ export default function useToken() {
     setToken(userToken.token);
   };
 
+  const removeToken = () => {
+    sessionStorage.removeItem('token');
+    setToken(null);
+  };
+
   return {
     setToken: saveToken,
+    removeToken,
     token
-  }
+  };
 }
