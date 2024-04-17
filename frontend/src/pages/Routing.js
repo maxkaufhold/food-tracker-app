@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import Dashboard from './Dashboard';
 import Scan from './Scan';
 import Inventory from './Inventory';
 import Statistics from './Statistics';
@@ -10,8 +9,7 @@ import Profil from './Profil';
 const Routing = ({ group }) => {
   return (
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Statistics />} />
           <Route path="/scan" element={<Scan />} />
           <Route path="/inventory" element={<Inventory group={group} />} />
           <Route path="/statistics" element={<Statistics />} />

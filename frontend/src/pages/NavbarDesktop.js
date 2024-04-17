@@ -46,7 +46,6 @@ function NavbarDesktop({ group, setGroup }) {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="flex-column align-items-start">
-              <Nav.Link href="/dashboard">Dashboard</Nav.Link>
               <Nav.Link href="/scan">Scan</Nav.Link>
               <Nav.Link href="/inventory">Inventory</Nav.Link>
               <Nav.Link href="/statistics">Statistics</Nav.Link>
