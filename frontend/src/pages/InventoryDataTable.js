@@ -1,59 +1,63 @@
 import React from "react";
 import axios from "axios";
-import { API_URL } from '../Constants';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
-import 'react-tabs/style/react-tabs.css';
+import { API_URL } from "../Constants";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
+import "react-tabs/style/react-tabs.css";
 
 function InventoryDataTable({ user_group_id }) {
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
-    axios.get(`${API_URL}/data/inventory?user_group_id=${user_group_id}`).then((response) => {
-      setData(response.data);
-    });
+    axios
+      .get(`${API_URL}/api/data/inventory?user_group_id=${user_group_id}`)
+      .then((response) => {
+        setData(response.data);
+      });
   }, [user_group_id]); // Hier den user_group_id hinzufügen, um sicherzustellen, dass das useEffect bei Änderungen von user_group_id neu ausgeführt wird
-  console.log(data);
-  if (!data) return null;
+
+  if (!data || data.length === 0) return <p>Keine Inventardaten vorhanden!</p>;
+
   const handleDeleteItem = (inv_id) => {
     if (!inv_id) return; // Wenn keine inv_id ausgewählt wurde, tue nichts
-    axios.post(`${API_URL}/data/inventory/delete`, { inv_id: inv_id })
-      .then(response => {
-        console.log(response);
+    axios
+      .post(`${API_URL}/api/data/inventory/delete`, { inv_id: inv_id })
+      .then((response) => {
         // Nachdem das Element gelöscht wurde, aktualisieren wir den Datenzustand
-        setData(data.filter(item => item.inv_id !== inv_id));
+        setData(data.filter((item) => item.inv_id !== inv_id));
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error deleting item:", error);
       });
   };
 
   return (
-      <Table striped bordered hover size="sm">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Mhd</th>
-            <th>Action</th>
+    <Table striped bordered hover size="sm">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Mhd</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((item) => (
+          <tr key={item.inv_id}>
+            <td>{item.description}</td>
+            <td>{item.mhd}</td>
+            <td>
+              <Button
+                variant="outline-danger"
+                onClick={() => handleDeleteItem(item.inv_id)}
+              >
+                X
+              </Button>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <tr key={item.inv_id}>
-              <td>{item.description}</td>
-              <td>{item.mhd}</td>
-              <td>
-                <Button 
-                  variant="outline-danger" 
-                  onClick={() => handleDeleteItem(item.inv_id)}>
-                  X
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+        ))}
+      </tbody>
+    </Table>
   );
-};
+}
 
 export default InventoryDataTable;

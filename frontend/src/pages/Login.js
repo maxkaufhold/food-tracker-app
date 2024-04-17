@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import PropTypes from "prop-types";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import Image from "react-bootstrap/Image";
 import LoginTab from "./LoginTab";
 import RegisterTab from "./RegisterTab";
 
-function Login({ setToken }) {
+function Login({ setUser }) {
   return (
     <Card
       className="my-5 mx-auto"
@@ -31,7 +29,7 @@ function Login({ setToken }) {
               </>
             }
           >
-            <LoginTab setToken={setToken} />
+            <LoginTab setUser={setUser} />
           </Tab>
           <Tab
             key="register"
@@ -45,7 +43,7 @@ function Login({ setToken }) {
               </>
             }
           >
-            <RegisterTab setToken={setToken} />
+            <RegisterTab setUser={setUser} />
           </Tab>
         </Tabs>
       </Card.Body>

@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import React, { useState } from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 import Login from "./pages/Login";
-import NavbarMobile from "./pages/NavbarMobile";
 import NavbarDesktop from "./pages/NavbarDesktop";
 import Routing from "./pages/Routing";
-import useToken from './useToken';
-import Container from 'react-bootstrap/Container';
+import useUser from "./useUser";
+import Container from "react-bootstrap/Container";
 // Importing the Bootstrap CSS
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
-  const { token, setToken } = useToken();
+  const { user, setUser } = useUser();
 
-  if(!token) {
-    return <Login setToken={setToken} />
+  if (!user || !user.token) {
+    return <Login setUser={setUser} />;
   }
 
   return (
@@ -23,14 +22,13 @@ export default function App() {
         <BrowserRouter>
           <div>
             <NavbarDesktop />
-          </div> 
-            <Routing />
+          </div>
+          <Routing />
         </BrowserRouter>
-      </ Container>
+      </Container>
     </React.StrictMode>
   );
 }
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);

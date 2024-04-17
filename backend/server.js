@@ -52,7 +52,6 @@ app.use('/login', async (req, res) => {
         const user = await executeQuery(stmt);
 
         // Überprüfen, ob ein Benutzer mit dem angegebenen Benutzernamen gefunden wurde
-        console.log(user.length);
         if (user.length === 0) {
             res.status(401).send('Ungültige Anmeldeinformationen');
             return;
@@ -70,13 +69,13 @@ app.use('/login', async (req, res) => {
         // Wenn das Passwort übereinstimmt, ein neues Session-Token generieren und in der Datenbank speichern
         const newSessionToken = generateSessionToken();
         const updateSessionTokenStmt = `UPDATE users SET session_token = ${connection.escape(newSessionToken)} WHERE user_id = ${connection.escape(user[0].user_id)}`;
-        console.log(stmt, user, passwordMatch, updateSessionTokenStmt);
         
         await executeQuery(updateSessionTokenStmt);
         
 
         // Antwort mit dem Session-Token senden
         res.send({
+            user_id: user[0].user_id,
             token: newSessionToken
         });
     } catch (err) {
@@ -104,11 +103,20 @@ app.use('/register', async (req, res) => {
         const token = generateSessionToken();
 
         // Eintragen des Benutzers in die Datenbank
-        const stmt = `INSERT INTO users (username, password, session_token) VALUES (${connection.escape(regUsername)}, ${connection.escape(hashedPassword)}, ${connection.escape(token)})`;
-        await executeQuery(stmt);
+        const insstmt = `INSERT INTO users (username, password, session_token) VALUES (${connection.escape(regUsername)}, ${connection.escape(hashedPassword)}, ${connection.escape(token)})`;
+        await executeQuery(insstmt);
+
+        const stmt = `SELECT user_id, password, session_token FROM users WHERE username = ${connection.escape(regUsername)}`;
+        const user = await executeQuery(stmt);
+
+        if (user.length === 0) {
+            res.status(400).send('Fehler beim anlegen des Benutzers!');
+            return;
+        }
 
         res.status(201).send({
-            token: token
+            user_id: user[0].user_id,
+            token: user[0].token
         });
     } catch (error) {
         console.error('Fehler beim Registrieren: ' + error.message);
@@ -122,7 +130,6 @@ app.use('/logout', async (req, res) => {
 
         // Eintragen des Benutzers in die Datenbank
         const stmt = `UPDATE users set session_token = null where session_token = ${connection.escape(token)}`;
-        console.log(stmt);
         await executeQuery(stmt);
         res.status(200).send('Erfolgreich augeloggt');
 
@@ -135,7 +142,7 @@ app.use('/logout', async (req, res) => {
 app.get('/api/data/profil', async (req, res) => {
     try {
         // Daten aus MySQL abrufen und senden
-        res.send(await executeQuery('SELECT * FROM users'));
+        res.send(await executeQuery(`SELECT * FROM users where user_id = ${connection.escape(req.query.user_id)}`));
     } catch (err) {
         res.status(500).send('Interner Serverfehler');
     }
@@ -155,7 +162,6 @@ app.get('/api/data/inventory', async (req, res) => {
     try {
         // Daten aus MySQL abrufen und senden
         const stmt = `select inv.inv_id, fo.description, inv.mhd from inventory inv join foods fo on inv.food_id = fo.food_id where inv.user_group_id = ${connection.escape(req.query.user_group_id)}`;
-        console.log(stmt);
         res.send(await executeQuery(stmt));
     } catch (err) {
         res.status(500).send('Interner Serverfehler');

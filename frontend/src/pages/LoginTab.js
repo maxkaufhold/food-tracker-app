@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { API_URL } from '../Constants';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import PropTypes from "prop-types";
 
 async function loginUser(credentials) {
   try {
-    const response = await fetch("http://localhost:3000/login", {
+    const response = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,18 +26,18 @@ async function loginUser(credentials) {
   }
 }
 
-function LoginTab({ setToken }) {
+function LoginTab({ setUser }) {
   const [logUsername, setLogUserName] = useState();
   const [logPassword, setLogPassword] = useState();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const token = await loginUser({
+      const user = await loginUser({
         logUsername,
         logPassword,
       });
-      setToken(token);
+      setUser(user);
     } catch (error) {
       return;
     }
@@ -82,7 +83,7 @@ function LoginTab({ setToken }) {
 }
 
 LoginTab.propTypes = {
-  setToken: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
 
 export default LoginTab;

@@ -1,13 +1,15 @@
 import React from "react";
 import axios from "axios";
 import { API_URL } from '../Constants';
+import useUser from "../useUser";
 
 
 function Profil() {
+  const { user } = useUser();
   const [post, setPost] = React.useState(null);
 
   React.useEffect(() => {
-    axios.get('http://localhost:3000/api/data/profil').then((response) => {
+    axios.get(`${API_URL}/api/data/profil?user_id=${user.user_id}`).then((response) => {
       setPost(response.data[0]);
     });
   }, []);

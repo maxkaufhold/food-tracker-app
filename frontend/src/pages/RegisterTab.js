@@ -25,7 +25,7 @@ async function registerUser(credentials) {
   }
 }
 
-function RegisterTab({ setToken }) {
+function RegisterTab({ setUser }) {
   const [regUsername, setRegUserName] = useState();
   const [regPassword, setRegPassword] = useState();
   const [regConfirmPassword, setRegConfirmPassword] = useState();
@@ -33,12 +33,12 @@ function RegisterTab({ setToken }) {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const token = await registerUser({
+      const user = await registerUser({
         regUsername,
         regPassword,
         regConfirmPassword,
       });
-      setToken(token);
+      setUser(user);
     } catch (error) {
       return;
     }
@@ -89,7 +89,7 @@ function RegisterTab({ setToken }) {
 }
 
 RegisterTab.propTypes = {
-  setToken: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
 
 export default RegisterTab;
