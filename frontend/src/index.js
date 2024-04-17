@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import Routing from "./pages/Routing";
 import Login from "./pages/Login";
 import NavbarDesktop from "./pages/NavbarDesktop";
-import Routing from "./pages/Routing";
 import useUser from "./useUser";
+import useGroup from "./useGroup";
 import Container from "react-bootstrap/Container";
 // Importing the Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
   const { user, setUser } = useUser();
+  const { group, setGroup } = useGroup();
 
-  if (!user || !user.token) {
+  if (!user) {
     return <Login setUser={setUser} />;
   }
 
@@ -21,9 +23,9 @@ export default function App() {
       <Container fluid>
         <BrowserRouter>
           <div>
-            <NavbarDesktop />
+            <NavbarDesktop group={group} setGroup={setGroup}/>
           </div>
-          <Routing />
+          <Routing group={group}/>
         </BrowserRouter>
       </Container>
     </React.StrictMode>

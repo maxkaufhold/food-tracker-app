@@ -12,7 +12,7 @@ export default function useGroup() {
   const saveGroup = group => {
     sessionStorage.setItem('group', JSON.stringify(group));
     setGroup(group);
-    window.location.reload();
+    //window.location.reload();
   };
 
   return {

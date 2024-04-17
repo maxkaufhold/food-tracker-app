@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "../Constants";
 import useUser from "../useUser";
-import useGroup from "../useGroup";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-function NavbarUserGroupDropDown() {
+function NavbarUserGroupDropDown({ group, setGroup }) {
   const { user } = useUser();
   const [data, setData] = useState(null);
-  const { group, setGroup } = useGroup();
 
   useEffect(() => {
     axios.get(`${API_URL}/api/data/groups?user_id=${user.user_id}`).then((response) => {
@@ -21,7 +19,6 @@ function NavbarUserGroupDropDown() {
 
   const handleGroupSelect = (selectedUserGroupId) => {
     // in actionKey kann kein Objekt übergeben werden, deshalb wird die ID übergeben und in data nach dem Objekt gesucht
-    console.log(data.find((item) => item.user_group_id == selectedUserGroupId));
     setGroup(data.find((item) => item.user_group_id == selectedUserGroupId));
   };
 

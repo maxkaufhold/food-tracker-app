@@ -7,7 +7,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import CloseButton from "react-bootstrap/CloseButton";
 
-function NavbarDesktop() {
+function NavbarDesktop({ group, setGroup }) {
   const { removeUser } = useUser();
   const [showOffcanvas, setShowOffcanvas] = useState(false);
 
@@ -21,7 +21,7 @@ function NavbarDesktop() {
           className="custom-button"
           onClick={() => setShowOffcanvas(!showOffcanvas)}
         />
-        < NavbarUserGroupDropDown />
+        < NavbarUserGroupDropDown group={group} setGroup={setGroup} />
         < ThemeSwitch />
         <Navbar.Offcanvas
           show={showOffcanvas}

@@ -16,7 +16,7 @@ function InventoryDataTable({ user_group_id }) {
       });
   }, [user_group_id]); // Hier den user_group_id hinzufügen, um sicherzustellen, dass das useEffect bei Änderungen von user_group_id neu ausgeführt wird
 
-  if (!data || data.length === 0) return <p>Keine Inventardaten vorhanden!</p>;
+  if (!data || data.length === 0) return null;
 
   const handleDeleteItem = (inv_id) => {
     if (!inv_id) return; // Wenn keine inv_id ausgewählt wurde, tue nichts

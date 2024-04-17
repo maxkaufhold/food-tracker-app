@@ -7,13 +7,13 @@ import List from './List';
 import Recipes from './Recipes';
 import Profil from './Profil';
 
-const Routing = () => {
+const Routing = ({ group }) => {
   return (
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/scan" element={<Scan />} />
-          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/inventory" element={<Inventory group={group} />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/list" element={<List />} />
           <Route path="/recipes" element={<Recipes />} />
