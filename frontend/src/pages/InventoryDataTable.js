@@ -5,16 +5,16 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import "react-tabs/style/react-tabs.css";
 
-function InventoryDataTable({ user_group_id }) {
+function InventoryDataTable({ group }) {
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
     axios
-      .get(`${API_URL}/api/data/inventory?user_group_id=${user_group_id}`)
+      .get(`${API_URL}/api/data/inventory?user_group_id=${group}`)
       .then((response) => {
         setData(response.data);
       });
-  }, [user_group_id]); // Hier den user_group_id hinzufügen, um sicherzustellen, dass das useEffect bei Änderungen von user_group_id neu ausgeführt wird
+  }, [group]); // Hier den group hinzufügen, um sicherzustellen, dass das useEffect bei Änderungen von group neu ausgeführt wird
 
   if (!data || data.length === 0) return null;
 

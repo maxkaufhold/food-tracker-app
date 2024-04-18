@@ -13,7 +13,7 @@ const Routing = ({ group }) => {
           <Route path="/scan" element={<Scan />} />
           <Route path="/inventory" element={<Inventory group={group} />} />
           <Route path="/statistics" element={<Statistics />} />
-          <Route path="/list" element={<List />} />
+          <Route path="/list" element={<List group={group} />} />
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/profil" element={<Profil />} />
         </Routes>

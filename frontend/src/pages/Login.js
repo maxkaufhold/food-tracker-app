@@ -25,7 +25,7 @@ function Login({ setUser }) {
             eventKey="login"
             title={
               <>
-                <Image src="../img/login.png" style={{ width: "30px" }} />
+                <Image src="../img/login.png" style={{ width: "24px" }} />
               </>
             }
           >
@@ -38,7 +38,7 @@ function Login({ setUser }) {
               <>
                 <Image
                   src="../img/registration.png"
-                  style={{ width: "30px" }}
+                  style={{ width: "25px" }}
                 />
               </>
             }

@@ -5,7 +5,7 @@ function Inventory({ group }) {
 
   return (
     <>
-      <InventoryDataTable user_group_id={group ? group.user_group_id : null } />
+      <InventoryDataTable group={group} />
     </>
   );
 }

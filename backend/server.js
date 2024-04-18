@@ -173,9 +173,50 @@ app.post('/api/data/inventory/delete', async (req, res) => {
         // Daten aus MySQL abrufen und senden
         const stmt = `delete from inventory where inv_id = ${connection.escape(req.body.inv_id)}`;
         if(await executeQuery(stmt)){
-            res.status(201).send('Benutzer erfolgreich angelegt');
+            res.status(201).send('Eintag erfolgreich gelöscht');
         } else {
-            res.status(201).send('Fehler beim anlegen des Benutzers');
+            res.status(201).send('Fehler beim Löschen des Eintrags');
+        }
+    } catch (err) {
+        res.status(500).send('Interner Serverfehler');
+    }
+});
+
+app.get('/api/data/list', async (req, res) => {
+    try {
+        // Daten aus MySQL abrufen und senden
+        const stmt = `select li.list_id, li.item from list li where li.user_group_id = ${connection.escape(req.query.user_group_id)}`;
+        res.send(await executeQuery(stmt));
+    } catch (err) {
+        res.status(500).send('Interner Serverfehler');
+    }
+});
+
+app.post('/api/data/list/delete', async (req, res) => {
+    try {
+        // Daten aus MySQL abrufen und senden
+        const stmt = `delete from list where list_id = ${connection.escape(req.body.list_id)}`;
+        if(await executeQuery(stmt)){
+            res.status(201).send('Eintag erfolgreich gelöscht');
+        } else {
+            res.status(201).send('Fehler beim Löschen des Eintrags');
+        }
+    } catch (err) {
+        res.status(500).send('Interner Serverfehler');
+    }
+});
+
+app.post('/api/data/list/insert', async (req, res) => {
+    try {
+        // Daten aus MySQL abrufen und senden
+        const insertstmt = `insert into list (user_group_id, item) values (${connection.escape(req.body.user_group_id)}, ${connection.escape(req.body.item)})`;
+        const result = await executeQuery(insertstmt);
+        if(result.insertId){
+            const stmt = `select li.list_id, li.item from list li where li.list_id = ${connection.escape(result.insertId)}`;
+            const insertedItem = await executeQuery(stmt);
+            res.status(201).send(insertedItem[0]);
+        } else {
+            res.status(201).send('Fehler beim hinzufügen des Eintrags');
         }
     } catch (err) {
         res.status(500).send('Interner Serverfehler');

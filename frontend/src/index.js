@@ -25,7 +25,7 @@ export default function App() {
           <div>
             <NavbarDesktop group={group} setGroup={setGroup}/>
           </div>
-          <Routing group={group}/>
+          <Routing group={group ? group.user_group_id : null}/>
         </BrowserRouter>
       </Container>
     </React.StrictMode>

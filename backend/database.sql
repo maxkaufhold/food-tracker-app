@@ -51,6 +51,13 @@ CREATE TABLE inventory (
     FOREIGN KEY (food_id) REFERENCES foods(food_id)
 );
 
+CREATE TABLE list (
+    list_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_group_id INT NOT NULL,
+    item varchar(255) NOT NULL,
+    FOREIGN KEY (user_group_id) REFERENCES user_groups(user_group_id)
+);
+
 -- Testdaten für die Tabelle "users" (mit Namen als Passwort)
 INSERT INTO users (username, password) VALUES
 ('john', '$2b$10$jw97Ne9rOEswuLt.0mB8hOhIRgq4BQSUYOJGC7TS3iCFdYu9NW4Zu'),

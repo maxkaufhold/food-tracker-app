@@ -11,7 +11,6 @@ export default function useUser() {
   const [user, setUser] = useState(getUser());
 
   const saveUser = user => {
-    console.log(user);
     sessionStorage.setItem('user', JSON.stringify(user));
     setUser(user);
   };
