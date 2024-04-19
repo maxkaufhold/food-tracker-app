@@ -9,6 +9,7 @@ import useGroup from "./useGroup";
 import Container from "react-bootstrap/Container";
 // Importing the Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
+import Card from "react-bootstrap/Card";
 
 export default function App() {
   const { user, setUser } = useUser();
@@ -22,10 +23,8 @@ export default function App() {
     <React.StrictMode>
       <Container fluid>
         <BrowserRouter>
-          <div>
-            <NavbarDesktop group={group} setGroup={setGroup}/>
-          </div>
-          <Routing group={group ? group.user_group_id : null}/>
+          <NavbarDesktop group={group} setGroup={setGroup} />
+          <Routing group={group ? group.user_group_id : null} />
         </BrowserRouter>
       </Container>
     </React.StrictMode>

@@ -1,10 +1,10 @@
+import React from "react";
+import useUser from "../useUser";
 
-const Scan = () => {
-  return (
-    <div>
-      <h1>Scan</h1>
-    </div>
-    );
-  };
-  
-  export default Scan;
+function Scan({ group }) {
+  const { user } = useUser();
+  const url = `https://UrlToScanFrontend?user=${user}&user_group_id=${group}`;
+  return <iframe title="embedded-scan" src={url} width="100%" height="90%" />;
+}
+
+export default Scan;

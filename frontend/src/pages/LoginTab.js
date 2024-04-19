@@ -73,7 +73,7 @@ function LoginTab({ setUser }) {
           type="submit"
           variant="outline-secondary"
           size="lg"
-          style={{ width: "300px", position: "absolute", bottom: "50px" }}
+          style={{ width: "300px", position: "absolute", bottom: "10%" }}
         >
           Login
         </Button>
