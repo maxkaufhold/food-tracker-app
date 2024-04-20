@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { API_URL } from '../Constants';
+import { API_URL } from "../Constants";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import PropTypes from "prop-types";
@@ -45,39 +45,41 @@ function LoginTab({ setUser }) {
 
   return (
     <>
-      <h3 className="mb-2">Login</h3>
-      <p className="text-white-50 mb-5">
-        Please enter your login and password!
-      </p>
-      <Form onSubmit={handleLogin} style={{ width: "300px" }}>
-        <Form.Label style={{ marginLeft: "3px" }}>Username</Form.Label>
-        <Form.Control
-          type="text"
-          id="loginUsername"
-          onChange={(e) => setLogUserName(e.target.value)}
-          className="mb-3"
-        />
-
-        <Form.Label style={{ marginLeft: "3px" }}>Password</Form.Label>
-        <Form.Control
-          type="password"
-          id="loginPassword"
-          onChange={(e) => setLogPassword(e.target.value)}
-          className="mb-1"
-        />
-
-        <p className="small mb-5" style={{ marginLeft: "4px" }}>
-          <a href="#!">Forgot password?</a>
+      <div className="d-flex flex-column align-items-center">
+        <h3 className="mb-2">Login</h3>
+        <p className="text-white-50 mb-5">
+          Please enter your login and password!
         </p>
-        <Button
-          type="submit"
-          variant="outline-secondary"
-          size="lg"
-          style={{ width: "300px", position: "absolute", bottom: "10%" }}
-        >
-          Login
-        </Button>
-      </Form>
+        <Form onSubmit={handleLogin} style={{ width: "80%" }}>
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            id="loginUsername"
+            onChange={(e) => setLogUserName(e.target.value)}
+            className="mb-3"
+          />
+
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            id="loginPassword"
+            onChange={(e) => setLogPassword(e.target.value)}
+            className="mb-1"
+          />
+
+          <p className="small">
+            <a href="#!">Forgot password?</a>
+          </p>
+          <Button
+            type="submit"
+            variant="outline-secondary"
+            size="lg"
+            style={{ width: "80%", position: "absolute", bottom: "10%" }}
+          >
+            Login
+          </Button>
+        </Form>
+      </div>
     </>
   );
 }

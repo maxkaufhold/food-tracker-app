@@ -46,44 +46,45 @@ function RegisterTab({ setUser }) {
 
   return (
     <>
-      <h3 className="mb-2">Register</h3>
-      <p className="text-white-50 mb-2">
-        Please enter your email and password!
-      </p>
-      <Form onSubmit={handleRegister} style={{ width: "300px" }}>
-        <Form.Label style={{ marginLeft: "3px" }}>Username</Form.Label>
-        <Form.Control
-          type="text"
-          id="registerUsername"
-          onChange={(e) => setRegUserName(e.target.value)}
-          className="mb-3"
-        />
+      <div className="d-flex flex-column align-items-center">
+        <h3 className="mb-2">Register</h3>
+        <p className="text-white-50 mb-4">
+          Please enter your email and password!
+        </p>
+        <Form onSubmit={handleRegister} style={{ width: "80%" }}>
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            id="registerUsername"
+            onChange={(e) => setRegUserName(e.target.value)}
+            className="mb-3"
+          />
 
-        <Form.Label style={{ marginLeft: "3px" }}>Password</Form.Label>
-        <Form.Control
-          type="password"
-          id="registerPassword"
-          onChange={(e) => setRegPassword(e.target.value)}
-          className="mb-3"
-        />
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            id="registerPassword"
+            onChange={(e) => setRegPassword(e.target.value)}
+            className="mb-3"
+          />
 
-        <Form.Label style={{ marginLeft: "3px" }}>Confirm Password</Form.Label>
-        <Form.Control
-          type="password"
-          id="confirmPassword"
-          onChange={(e) => setRegConfirmPassword(e.target.value)}
-          className="mb-4"
-        />
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            id="confirmPassword"
+            onChange={(e) => setRegConfirmPassword(e.target.value)}
+          />
 
-        <Button
-          type="submit"
-          variant="outline-secondary"
-          size="lg"
-          style={{ width: "300px", position: "absolute", bottom: "10%" }}
-        >
-          Register
-        </Button>
-      </Form>
+          <Button
+            type="submit"
+            variant="outline-secondary"
+            size="lg"
+            style={{ width: "80%", position: "absolute", bottom: "10%" }}
+          >
+            Register
+          </Button>
+        </Form>
+      </div>
     </>
   );
 }

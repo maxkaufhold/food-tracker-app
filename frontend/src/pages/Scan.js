@@ -8,3 +8,4 @@ function Scan({ group }) {
 }
 
 export default Scan;
+  
