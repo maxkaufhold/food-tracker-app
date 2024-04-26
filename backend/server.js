@@ -161,7 +161,18 @@ app.get('/api/data/groups', async (req, res) => {
 app.get('/api/data/inventory', async (req, res) => {
     try {
         // Daten aus MySQL abrufen und senden
-        const stmt = `select inv.inv_id, fo.description, inv.mhd from inventory inv join foods fo on inv.food_id = fo.food_id where inv.user_group_id = ${connection.escape(req.query.user_group_id)}`;
+        const stmt = `select inv.inv_id, fo.description, date_format(inv.mhd, '%d.%m.%Y') as mhd from inventory inv join foods fo on inv.food_id = fo.food_id where inv.user_group_id = ${connection.escape(req.query.user_group_id)}`;
+        res.send(await executeQuery(stmt));
+    } catch (err) {
+        res.status(500).send('Interner Serverfehler');
+    }
+});
+
+app.get('/api/data/inventory/lowestmhd', async (req, res) => {
+    try {
+        // Daten aus MySQL abrufen und senden
+        const stmt = `select fo.description, inv.mhd from inventory inv join foods fo on inv.food_id = fo.food_id where inv.user_group_id = ${connection.escape(req.query.user_group_id)} order by mhd asc limit 5`;
+        console.log(stmt);
         res.send(await executeQuery(stmt));
     } catch (err) {
         res.status(500).send('Interner Serverfehler');

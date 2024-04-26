@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import Card from "react-bootstrap/Card";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
@@ -6,7 +7,6 @@ import Image from "react-bootstrap/Image";
 import LoginTab from "./LoginTab";
 import RegisterTab from "./RegisterTab";
 
-import { useMediaQuery } from "react-responsive";
 
 function Login({ setUser }) {
   const isDesktopOrTablet = useMediaQuery({ query: "(min-width: 1000px)" });
@@ -59,6 +59,13 @@ function Login({ setUser }) {
           </Tab>
         </Tabs>
       </Card.Body>
+      <style>
+      {`
+          .nav-tabs .nav-link.active {
+            border-top: 0px;
+          }
+        `}
+      </style>
     </Card>
   );
 }
