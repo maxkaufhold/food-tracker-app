@@ -47,9 +47,7 @@ function RegisterTab({ setUser }) {
   return (
     <>
       <div className="d-flex flex-column align-items-center">
-        <h3 className="mb-2">Register</h3>
         <p className="text-white-50 mb-4">
-          Please enter your email and password!
         </p>
         <Form onSubmit={handleRegister} style={{ width: "80%" }}>
           <Form.Label>Username</Form.Label>
