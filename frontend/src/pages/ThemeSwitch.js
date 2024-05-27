@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 
 function ThemeSwitch() {
+  const [theme, setTheme] = useState(document.body.dataset.bsTheme);
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme) {
+      setTheme(storedTheme);
+      document.body.dataset.bsTheme = storedTheme;
+    }
+  }, []);
 
   const handleThemeSwitch = () => {
-    document.body.dataset.bsTheme =
-      document.body.dataset.bsTheme === "light" ? "dark" : "light";
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.body.dataset.bsTheme = newTheme;
   };
 
   return (
@@ -15,6 +26,7 @@ function ThemeSwitch() {
           type="switch"
           id="theme-switch"
           onChange={handleThemeSwitch}
+          checked={theme === "dark"}
         />
       </Form>
     </>
