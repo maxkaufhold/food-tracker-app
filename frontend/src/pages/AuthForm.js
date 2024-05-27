@@ -6,9 +6,10 @@ import Login from "./Login";
 import Signup from "./Signup";
 
 function AuthForm({ setUser }) {
-  const [activeTab, setActiveTab] = useState();
+  const [activeTab, setActiveTab] = useState("login");
   const [submit, setSubmit] = useState(false);
   const [triggerAnimation, setTriggerAnimation] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   const isDesktopOrTablet = useMediaQuery({ query: "(min-width: 1000px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
@@ -18,6 +19,7 @@ function AuthForm({ setUser }) {
     setSubmit(false);
     setActiveTab(tab);
     setTriggerAnimation(true);
+    setInitialLoad(false);
   };
 
   useEffect(() => {
@@ -85,7 +87,7 @@ function AuthForm({ setUser }) {
             </div>
             <div
               className={`${
-                activeTab === "signup" ? "slide-right" : "slide-left"
+                activeTab === "signup" && !initialLoad ? "slide-right" : "slide-left"
               }`}
             >
               {activeTab === "login" && (
