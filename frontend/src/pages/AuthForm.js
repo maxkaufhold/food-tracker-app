@@ -87,7 +87,7 @@ function AuthForm({ setUser }) {
             </div>
             <div
               className={`${
-                activeTab === "signup" && !initialLoad ? "slide-right" : "slide-left"
+                !initialLoad ? (activeTab === "signup" ? "slide-right" : "slide-left") : ""
               }`}
             >
               {activeTab === "login" && (
