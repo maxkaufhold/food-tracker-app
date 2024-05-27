@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from "./Constants";
 import axios from 'axios';
 
 export default function useUser() {
@@ -20,7 +21,7 @@ export default function useUser() {
       const rmUser = user;
       sessionStorage.removeItem('user');
       setUser(null);
-      await axios.post("http://localhost:3000/logout", { token: rmUser.token }); // Senden Sie den POST-Request
+      await axios.post(`${API_URL}/logout`, { token: rmUser.token }); // Senden Sie den POST-Request
       window.location.reload(); // Seite automatisch neu laden
     } catch (error) {
       console.error("Fehler beim Logout: " + error.message);
