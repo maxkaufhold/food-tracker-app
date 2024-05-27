@@ -10,10 +10,10 @@ const cors = require('cors');
 
 // MySQL Verbindungseinstellungen
 const dbConfig = {
-    host: 'localhost',
-    user: 'admin',
-    password: '',
-    database: 'food_tracker_app_db'
+    host: 'pong123.online',
+    user: 'sncdb034x',
+    password: '%185wamT8',
+    database: 'barcodes'
 };
 
 // Verbindung zur MySQL-Datenbank herstellen
