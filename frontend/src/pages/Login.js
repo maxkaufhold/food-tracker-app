@@ -32,7 +32,7 @@ function Signup({ setUser, submit, setSubmit }) {
   const [logPassword, setLogPassword] = useState();
 
   useEffect(() => {
-    if (submit) {
+    if (submit && logUsername && logPassword) {
       const handleSubmit = async () => {
         try {
           const user = await loginUser({
@@ -43,12 +43,11 @@ function Signup({ setUser, submit, setSubmit }) {
           setUser(user);
         } catch (error) {
           console.error("Login fehlgeschlagen", error);
-        } finally {
-          setSubmit(false);
         }
       };
       handleSubmit();
     }
+    setSubmit(false);
   }, [submit]);
 
   return (

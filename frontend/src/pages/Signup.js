@@ -31,7 +31,7 @@ function Signup({ setUser, submit, setSubmit }) {
   const [regConfirmPassword, setRegConfirmPassword] = useState();
 
   useEffect(() => {
-    if (submit) {
+    if (submit && regUsername && regPassword && regConfirmPassword) {
       const handleSubmit = async () => {
         try {
           const user = await registerUser({
@@ -43,12 +43,12 @@ function Signup({ setUser, submit, setSubmit }) {
           setUser(user);
         } catch (error) {
           console.error("Registrierung fehlgeschlagen", error);
-        } finally {
-          setSubmit(false);
         }
       };
       handleSubmit();
     }
+    setSubmit(false);
+
   }, [submit]);
 
   return (

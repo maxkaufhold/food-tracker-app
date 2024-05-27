@@ -28,6 +28,19 @@ function AuthForm({ setUser }) {
     }
   }, [triggerAnimation]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter") {
+        setSubmit(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
       <div style={{ overflow: "hidden" }}>
@@ -75,15 +88,32 @@ function AuthForm({ setUser }) {
                 activeTab === "signup" ? "slide-right" : "slide-left"
               }`}
             >
-              {activeTab === "login" && <Login setUser={setUser} submit={submit} setSubmit={setSubmit}/>}
-              {activeTab === "signup" && <Signup setUser={setUser} submit={submit} setSubmit={setSubmit}/>}
+              {activeTab === "login" && (
+                <Login
+                  setUser={setUser}
+                  submit={submit}
+                  setSubmit={setSubmit}
+                />
+              )}
+              {activeTab === "signup" && (
+                <Signup
+                  setUser={setUser}
+                  submit={submit}
+                  setSubmit={setSubmit}
+                />
+              )}
             </div>
             <div className="d-flex flex-column align-items-center">
               <Button
                 type="submit"
                 variant="outline-secondary"
                 size="lg"
-                style={{ width: "80%", position: "absolute", bottom: "10%", transition: "all 1s"}}
+                style={{
+                  width: "80%",
+                  position: "absolute",
+                  bottom: "10%",
+                  transition: "all 1s",
+                }}
                 onClick={() => setSubmit(true)}
               >
                 Submit
