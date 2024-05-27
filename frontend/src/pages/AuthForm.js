@@ -6,7 +6,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 
 function AuthForm({ setUser }) {
-  const [activeTab, setActiveTab] = useState("login");
+  const [activeTab, setActiveTab] = useState();
   const [submit, setSubmit] = useState(false);
   const [triggerAnimation, setTriggerAnimation] = useState(false);
 
