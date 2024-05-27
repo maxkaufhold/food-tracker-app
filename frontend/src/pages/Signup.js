@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
+import React, { useState, useEffect } from "react";
+import { API_URL } from "../Constants";
 import Form from "react-bootstrap/Form";
 import PropTypes from "prop-types";
 
 async function registerUser(credentials) {
   try {
-    const response = await fetch("http://localhost:3000/register", {
+    const response = await fetch(`${API_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,33 +25,38 @@ async function registerUser(credentials) {
   }
 }
 
-function RegisterTab({ setUser }) {
+function Signup({ setUser, submit, setSubmit }) {
   const [regUsername, setRegUserName] = useState();
   const [regPassword, setRegPassword] = useState();
   const [regConfirmPassword, setRegConfirmPassword] = useState();
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      const user = await registerUser({
-        regUsername,
-        regPassword,
-        regConfirmPassword,
-      });
-      setUser(user);
-    } catch (error) {
-      return;
+  useEffect(() => {
+    if (submit && regUsername && regPassword && regConfirmPassword) {
+      const handleSubmit = async () => {
+        try {
+          const user = await registerUser({
+            regUsername,
+            regPassword,
+            regConfirmPassword,
+          });
+          console.log(user);
+          setUser(user);
+        } catch (error) {
+          console.error("Registrierung fehlgeschlagen", error);
+        }
+      };
+      handleSubmit();
     }
-  };
+    setSubmit(false);
+
+  }, [submit]);
 
   return (
     <>
       <div className="d-flex flex-column align-items-center">
-        <h3 className="mb-2">Register</h3>
-        <p className="text-white-50 mb-4">
-          Please enter your email and password!
-        </p>
-        <Form onSubmit={handleRegister} style={{ width: "80%" }}>
+        <p className="text-white-50 mb-4"></p>
+        <p className="text-white-50 mb-4"></p>
+        <div style={{ width: "80%" }}>
           <Form.Label>Username</Form.Label>
           <Form.Control
             type="text"
@@ -74,23 +79,14 @@ function RegisterTab({ setUser }) {
             id="confirmPassword"
             onChange={(e) => setRegConfirmPassword(e.target.value)}
           />
-
-          <Button
-            type="submit"
-            variant="outline-secondary"
-            size="lg"
-            style={{ width: "80%", position: "absolute", bottom: "10%" }}
-          >
-            Register
-          </Button>
-        </Form>
+        </div>
       </div>
     </>
   );
 }
 
-RegisterTab.propTypes = {
+Signup.propTypes = {
   setUser: PropTypes.func.isRequired,
 };
 
-export default RegisterTab;
+export default Signup;

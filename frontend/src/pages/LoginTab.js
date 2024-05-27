@@ -46,9 +46,7 @@ function LoginTab({ setUser }) {
   return (
     <>
       <div className="d-flex flex-column align-items-center">
-        <h3 className="mb-2">Login</h3>
-        <p className="text-white-50 mb-5">
-          Please enter your login and password!
+        <p className="text-white-50 mb-4">
         </p>
         <Form onSubmit={handleLogin} style={{ width: "80%" }}>
           <Form.Label>Username</Form.Label>

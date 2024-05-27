@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import Routing from "./pages/Routing";
-import Login from "./pages/Login";
+import AuthForm from "./pages/AuthForm";
 import Navbar from "./pages/Navbar";
 import useUser from "./useUser";
 import useGroup from "./useGroup";
@@ -15,7 +15,7 @@ export default function App() {
   const { group, setGroup } = useGroup();
 
   if (!user) {
-    return <Login setUser={setUser} />;
+    return <AuthForm setUser={setUser} />;
   }
 
   return (
