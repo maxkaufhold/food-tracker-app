@@ -1,139 +1,86 @@
 import React, { useState, useEffect } from "react";
-import { useMediaQuery } from "react-responsive";
-import Card from "react-bootstrap/Card";
-import LoginTab from "./LoginTab";
-import Signup from "./Signup";
+import { API_URL } from "../Constants";
+import Form from "react-bootstrap/Form";
+import PropTypes from "prop-types";
 
-function Login({ setUser }) {
-  const [activeTab, setActiveTab] = useState("login");
-  const [triggerAnimation, setTriggerAnimation] = useState(false);
+async function loginUser(credentials) {
+  console.log(credentials);
 
-  const isDesktopOrTablet = useMediaQuery({ query: "(min-width: 1000px)" });
-  const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
-  const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
+  try {
+    const response = await fetch(`${API_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
 
-  const handleClick = (tab) => {
-    setActiveTab(tab);
-    setTriggerAnimation(true);
-  };
+    if (!response.ok) {
+      throw new Error(response);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Fehler beim Login: " + error.message);
+    throw error;
+  }
+}
+
+function Signup({ setUser, submit, setSubmit }) {
+  const [logUsername, setLogUsername] = useState();
+  const [logPassword, setLogPassword] = useState();
 
   useEffect(() => {
-    if (triggerAnimation) {
-      setTimeout(() => {
-        setTriggerAnimation(false);
-      }, 50); // Adjust delay as needed
+    if (submit) {
+      const handleSubmit = async () => {
+        try {
+          const user = await loginUser({
+            logUsername,
+            logPassword,
+          });
+          console.log(user);
+          setUser(user);
+        } catch (error) {
+          console.error("Login fehlgeschlagen", error);
+        } finally {
+          setSubmit(false);
+        }
+      };
+      handleSubmit();
     }
-  }, [triggerAnimation]);
+  }, [submit]);
 
   return (
     <>
-    <div style={{ overflow: "hidden" }}>
-      <Card
-        className={isMobile ? "mx-auto" : "my-5 mx-auto"}
-        style={{
-          borderRadius: "0.5rem",
-          maxWidth: isMobile ? "100%" : "350px",
-          height: isMobile ? "100%" : "500px",
-          overflow: "hidden", // Ensure content is clipped within the card
-        }}
-      >
-        <Card.Body className="p-0 d-flex flex-column">
-          <div className="d-flex flex-column align-items-center">
-            <div
-              className="mb-0 mt-4 d-flex justify-content-between"
-              style={{ width: "80%" }}
-            >
-              <div
-                className={`tab ${activeTab === "login" ? "active" : "passive"}`}
-                onClick={() => handleClick("login")}
-              >
-                LOGIN
-                <div className={`underline ${triggerAnimation && "trigger"}`} />
-              </div>
-              <div
-                className={`tab ${activeTab === "signup" ? "active" : "passive"}`}
-                onClick={() => handleClick("signup")}
-              >
-                SIGNUP
-                <div className={`underline ${triggerAnimation && "trigger"}`} />
-              </div>
-            </div>
-          </div>
-          <div className={`${activeTab === "signup" ? "slide-right" : "slide-left"}`}>
-            {activeTab === "login" && <LoginTab setUser={setUser} />}
-            {activeTab === "signup" && <Signup setUser={setUser} />}
-          </div>
-        </Card.Body>
-      </Card>
-    </div>
-    <style>
-      {`
-        .underline {
-            width: 80%;
-            height: 3px;
-            background-color: rgb(222, 226, 230, .7);
-            transition: width 0.3s;
-            transform-origin: left;
-        }
-        
-        .tab {
-            font-size: 27px;
-            font-family: "Raleway", sans-serif;
-            font-optical-sizing: auto;
-            font-style: normal;
-            cursor: pointer;
-            position: relative; /* Keeping relative positioning */
-        }
+      <div className="d-flex flex-column align-items-center">
+        <p className="text-white-50 mb-4">
+        </p>
+        <p className="text-white-50 mb-4"></p>
+        <div style={{ width: "80%" }}>
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            id="loginUsername"
+            onChange={(e) => setLogUsername(e.target.value)}
+            className="mb-3"
+          />
 
-        .trigger {
-          width: 0 !important;
-        }
-
-        .active .underline {
-            width: 80%;
-        }
-
-        .passive .underline {
-            width: 0;
-        }
-
-        .active {
-            font-weight: 0;
-        }
-
-        .passive {
-            font-weight: 100;
-        }
-
-        .slide-right {
-          animation: 1s slide-right;
-        }
-
-        @keyframes slide-right {
-          from {
-            transform: translateX(100%);
-          }
-          to {
-            transform: translateX(0);
-          }
-        }
-
-        .slide-left {
-          animation: 1s slide-left;
-        }
-
-        @keyframes slide-left {
-          from {
-            transform: translateX(-100%);
-          }
-          to {
-            transform: translateX(0);
-          }
-        }
-      `}
-    </style>
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            id="loginPassword"
+            onChange={(e) => setLogPassword(e.target.value)}
+            className="mb-3"
+          />
+        </div>
+      </div>
     </>
   );
 }
 
-export default Login;
+Signup.propTypes = {
+  setUser: PropTypes.func.isRequired,
+};
+
+export default Signup;
