@@ -11,9 +11,9 @@ function AuthForm({ setUser }) {
   const [triggerAnimation, setTriggerAnimation] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
 
-  const isDesktopOrTablet = useMediaQuery({ query: "(min-width: 1000px)" });
+  //const isDesktopOrTablet = useMediaQuery({ query: "(min-width: 1000px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
-  const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
+  //const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
 
   const handleClick = (tab) => {
     setSubmit(false);
