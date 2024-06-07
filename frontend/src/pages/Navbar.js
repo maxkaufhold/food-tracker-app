@@ -6,6 +6,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import CloseButton from "react-bootstrap/CloseButton";
+import Image from 'react-bootstrap/Image';
 
 function NavbarDesktop({ group, setGroup }) {
   const { removeUser } = useUser();
@@ -38,7 +39,7 @@ function NavbarDesktop({ group, setGroup }) {
             }}
           >
             <Offcanvas.Title id={`offcanvasNavbarLabel-expand-false`}>
-              Auswahl
+              <Image src="/img/logo.jpg" roundedCircle style={{ width: '70px', height: '70px' }}/>
             </Offcanvas.Title>
             <div>
               <CloseButton onClick={handleClose} className="custom-button" />
