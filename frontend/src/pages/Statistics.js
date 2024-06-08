@@ -4,24 +4,25 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "r
 function Statistics() {
   // Testdaten
   const data = [
-    { name: "Jan", value: 400 },
-    { name: "Feb", value: 300 },
-    { name: "Mar", value: 600 },
-    { name: "Apr", value: 500 },
-    { name: "May", value: 800 },
-    { name: "Jun", value: 700 },
+    { name: "Jan", gekaufteArtikel: 39 },
+    { name: "Feb", gekaufteArtikel: 42 },
+    { name: "Mar", gekaufteArtikel: 63 },
+    { name: "Apr", gekaufteArtikel: 52 },
+    { name: "May", gekaufteArtikel: 57 },
+    { name: "Jun", gekaufteArtikel: 42 },
   ];
 
   return (
-    <div>
+    <div style={{ marginTop: '2%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <h1>Statistics</h1>
+      <p></p>
       <LineChart width={600} height={300} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
+        <Line type="monotone" dataKey="gekaufteArtikel" stroke="#8884d8" />
       </LineChart>
     </div>
   );
